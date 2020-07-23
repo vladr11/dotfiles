@@ -1,17 +1,25 @@
+TMUX_PROMPT="Do you want to use terminal with tmux?"
+
 function get_tmux_option()
 {
-    echo "Do you want to use terminal with tmux?"
-        select yn in "y" "n"; do
-            case $yn in
-                y ) export WANTS_TMUX=1;;
-                n ) export WANTS_TMUX=0;;
-            esac
-        done
+    echo $TMUX_PROMPT
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes)
+                export WANTS_TMUX=1
+                break
+                ;;
+            No) 
+                export WANTS_TMUX=0
+                break
+                ;;
+        esac
+    done
 }
 
 function configure_osx()
 {
-    get_tmux_option()
+    get_tmux_option
 
     # Install Homebrew if does not exist
     if ! type "$brew" > /dev/null; then
@@ -27,7 +35,7 @@ function configure_osx()
 
 function configure_linux()
 {
-    get_tmux_option()
+    get_tmux_option
 
     if [ $WANTS_TMUX -eq 1 ]; then
         sudo apt-get install tmux
@@ -36,9 +44,16 @@ function configure_linux()
 
 uname_says="$(uname -s)"
 case "${uname_says}" in
-    Linux*)     configure_linux();;
-    Darwin*)    configure_osx();;
-    *)          echo "Won't configure non-Unix machines because of my stubborness..."; exit 1;;
+    Linux*)
+        configure_linux
+        ;;
+    Darwin*)
+        configure_osx
+        ;;
+    *)
+        echo "Won't configure non-Unix machines because of my stubborness..."
+        exit 1
+        ;;
 esac
 
 # Copy antigen.zsh into ~/.antigen
