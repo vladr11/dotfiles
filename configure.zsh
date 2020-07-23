@@ -63,6 +63,9 @@ zsh $HOME/.antigen/antigen.zsh
 
 if [ $WANTS_TMUX -eq 1 ]; then
     cp .zshrc .vimrc .tmux.conf $HOME
+
+    # Also setup tmux package manager beforehand
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 else
     cp .zshrc .vimrc $HOME
 fi
