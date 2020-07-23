@@ -11,11 +11,11 @@ fi
 
 chmod 777 /var/run/docker.sock
 
-chown -R vladrusu: /home/vladrusu/.config
-chown -R vladrusu: /home/vladrusu/.kube
-chown -R vladrusu: /home/vladrusu/.ssh
-chown -R vladrusu: /home/vladrusu/zsh
-chown -R vladrusu: /home/vladrusu/.tmux
-chown -R vladrusu: /home/vladrusu/.stack /home/vladrusu/.stack-work
-exec /sbin/su-exec vladrusu /bin/zsh "$@"
+chown -R $USER: $HOME/.config
+chown -R $USER: $HOME/.kube
+chown -R $USER: $HOME/.ssh
+chown -R $USER: $HOME/zsh
+chown -R $USER: $HOME/.tmux
+chown -R $USER: $HOME/.stack /home/vladrusu/.stack-work
+exec /sbin/su-exec $USER /bin/zsh "$@"
 

@@ -1,10 +1,30 @@
+function machine_name()
+{
+    uname_says="$(uname -s)"
+    case "${uname_says}" in
+        Linux*)     machine=Linux;;
+        Darwin*)    machine=Mac;;
+        CYGWIN*)    machine=Cygwin;;
+        MINGW*)     machine=MinGW;;
+        *)          machine="UNKNOWN:${uname_says}"
+    esac
+    echo ${machine}
+}
+
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+    exec tmux
+fi
+
 source ~/Documents/tools/antigen/antigen.zsh
 
 antigen use oh-my-zsh
 
+if command -v tmux &> /dev/null; then
+    antigen bundle tmux
+    antigen bundle tmuxinator
+fi
+
 antigen bundle git
-antigen bundle tmux
-antigen bundle tmuxinator
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen bundle pod
@@ -80,8 +100,4 @@ compose-remake()
 if test -e .zshrcextra; then
     . ./.zshrcextra
 fi
-
-PATH=$PATH:$HOME/Documents/tools/jenkins
-
-export GOPATH=$HOME/go
 
