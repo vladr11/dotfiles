@@ -61,12 +61,31 @@ cp ./antigen.zsh $HOME/.antigen
 
 zsh $HOME/.antigen/antigen.zsh
 
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.git
+
+cp .zshrc .vimrc $HOME
+mkdir -p $HOME/.vim
+cp plugins.vim $HOME/.vim
+
+echo "*********************************"
+echo "*** When inside vim just run: ***"
+echo "*** :PlugInstall              ***"
+echo "*********************************"
+
 if [ $WANTS_TMUX -eq 1 ]; then
-    cp .zshrc .vimrc .tmux.conf $HOME
+    cp .tmux.conf $HOME
 
     # Also setup tmux package manager beforehand
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-else
-    cp .zshrc .vimrc $HOME
+
+    echo "*********************************"
+    echo "*** For tmux, perform the     ***"
+    echo "*** following key sequence    ***"
+    echo "*** for plugin installation   ***"
+    echo "*** Ctrl-S, I (capital i)     ***"
+    echo "*** Then wait 10-20 seconds   ***"
+    echo "*********************************"
 fi
+
+echo "Done"
 
