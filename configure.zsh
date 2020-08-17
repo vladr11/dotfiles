@@ -57,7 +57,8 @@ case "${uname_says}" in
 esac
 
 # Copy antigen.zsh into ~/.antigen
-cp ./antigen.zsh $HOME/.antigen
+mkdir -p $HOME/.antigen
+cp ./antigen.zsh $HOME/.antigen/antigen.zsh
 
 zsh $HOME/.antigen/antigen.zsh
 
