@@ -1,0 +1,8 @@
+:insert
+//
+// <filename>
+//
+// Created by <author> on <date>
+// Copyright © <year> Linnify. All rights reserved.
+//
+

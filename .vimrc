@@ -409,3 +409,16 @@ nmap <Leader>hu <Plug>GitGutterUnstageHunk
 
 map <C-a> :NERDTreeToggle<CR>
 
+let author="Vlad Rusu"
+let gatename=substitute(toupper(expand("%:t")), "\\.", "_", "g")
+
+autocmd bufnewfile *.c so ~/.vim/c-file-preamble.txt
+autocmd bufnewfile *.h so ~/.vim/h-file-preamble.txt
+autocmd bufnewfile *.[c|h] exe "1," . 7 . "g/<filename>/s//" . expand("%")
+autocmd bufnewfile *.[c|h] exe "1," . 7 . "g/<author>/s//" . author
+autocmd bufnewfile *.[c|h] exe "1," . 7 . "g/<date>/s//" . strftime("%d-%m-%Y")
+autocmd bufnewfile *.[c|h] exe "1," . 7 . "g/<year>/s//" . strftime("%Y")
+autocmd bufnewfile *.h exe "1," . 12 . "g/<gatename>/s//" . gatename
+
+autocmd Bufwritepre,filewritepre *.[c|h] execute "normal ma"
+
