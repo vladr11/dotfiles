@@ -429,7 +429,28 @@ function! s:typedef_struct(type_name)
     execute "normal! o} " . a:type_name . "_t;"
     call cursor( line('.') - 1, 1 )
     execute "normal! i\t"
+    normal! A
 endfunction
 
 command! -nargs=1 Tds call <SID>typedef_struct(<q-args>)
+
+function! s:typedef_enum(type_name)
+    execute "normal! itypedef enum " . a:type_name . "_e"
+    execute "normal! o{"
+    normal! o
+    execute "normal! o} " . a:type_name . "_t;"
+    call cursor( line('.') - 1, 1 )
+endfunction
+
+command! -nargs=1 Tde call <SID>typedef_enum(<q-args>)
+
+function! s:typedef_union(type_name)
+    execute "normal! itypedef union " . a:type_name . "_u"
+    execute "normal! o{"
+    normal! o
+    execute "normal! o} " . a:type_name . "_t;"
+    call cursor( line('.') - 1, 1 )
+endfunction
+
+command! -nargs=1 Tdu call <SID>typedef_union(<q-args>)
 
