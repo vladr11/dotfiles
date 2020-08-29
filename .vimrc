@@ -422,3 +422,14 @@ autocmd bufnewfile *.h exe "1," . 12 . "g/<gatename>/s//" . gatename
 
 autocmd Bufwritepre,filewritepre *.[c|h] execute "normal ma"
 
+function! s:typedef_struct(type_name)
+    execute "normal! itypedef struct " . a:type_name . "_s"
+    execute "normal! o{"
+    normal! o
+    execute "normal! o} " . a:type_name . "_t;"
+    call cursor( line('.') - 1, 1 )
+    execute "normal! i\t"
+endfunction
+
+command! -nargs=1 Tds call <SID>typedef_struct(<q-args>)
+
