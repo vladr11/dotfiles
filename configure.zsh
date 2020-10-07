@@ -59,6 +59,8 @@ esac
 # Copy antigen.zsh into ~/.antigen
 cp ./antigen.zsh $HOME/.antigen/andigen.zsh
 
+mkdir -p $HOME/.antigen
+
 zsh $HOME/.antigen/antigen.zsh
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.git
