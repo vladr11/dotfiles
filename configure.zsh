@@ -59,7 +59,7 @@ esac
 # Copy antigen.zsh into ~/.antigen
 mkdir -p $HOME/.antigen
 
-cp ./antigen.zsh $HOME/.antigen/andigen.zsh
+cp ./antigen.zsh $HOME/.antigen/antigen.zsh
 
 zsh $HOME/.antigen/antigen.zsh
 
