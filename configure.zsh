@@ -67,7 +67,7 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 
 cp .zshrc .vimrc $HOME
 mkdir -p $HOME/.vim
-cp plugins.vim $HOME/.vim
+cp plugins.vim $HOME/.vim/
 
 echo "*********************************"
 echo "*** When inside vim just run: ***"
