@@ -74,22 +74,6 @@ zstyle ':vcs_info:git*' formats 'on branch %F{magenta}%b%f'
 
 PROMPT=$'\n''%F{yellow}$(whoami)@$(hostname -s)%f in %F{cyan}%~%f ${vcs_info_msg_0_} %(?..%F{red}%?%f)'$'\n''%(?.%F{green}✔.%F{red}✘)%f  '
 
-function cd_ls()
-{
-    cd $1
-    ls
-}
-
-alias cd=cd_ls
-
-function mkdir_cd()
-{
-    mkdir $1
-    cd $1
-}
-
-alias mkdir=mkdir_cd
-
 compose-remake()
 {
     docker-compose stop $1
