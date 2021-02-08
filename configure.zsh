@@ -51,7 +51,7 @@ case "${uname_says}" in
         configure_osx
         ;;
     *)
-        echo "Won't configure non-Unix machines because of my stubborness..."
+        echo "No awesome configurations for non-Unix users..."
         exit 1
         ;;
 esac
@@ -63,7 +63,7 @@ cp ./antigen.zsh $HOME/.antigen/antigen.zsh
 
 zsh $HOME/.antigen/antigen.zsh
 
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.git
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 cp .zshrc .vimrc $HOME
 mkdir -p $HOME/.vim
