@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 TMUX_PROMPT="Do you want to use terminal with tmux?"
 
