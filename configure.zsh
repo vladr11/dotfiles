@@ -1,3 +1,5 @@
+#!/usr/bin/zsh
+
 TMUX_PROMPT="Do you want to use terminal with tmux?"
 
 function get_tmux_option()
