@@ -81,7 +81,7 @@ compose-remake()
     docker-compose start $1
 }
 
-if test -e .zshrcextra; then
-    . ./.zshrcextra
+if test -e $HOME/.zshrcextra; then
+    . $HOME/.zshrcextra
 fi
 
