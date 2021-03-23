@@ -52,6 +52,12 @@ filetype indent on
  
 " Set to auto read when a file is changed from the outside
 set autoread
+
+" Close vim when NERDTree is the last window
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" Mirror the same NERDTree on every tab
+autocmd BufWinEnter * silent NERDTreeMirror
  
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -60,7 +66,9 @@ let g:mapleader = ","
  
 " Fast saving
 nmap <leader>w :w!<cr>
- 
+
+" Make pear-tree not delete closing pair 
+let g:pear_tree_repeatable_expand = 0
  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -72,7 +80,14 @@ set so=7
 set mouse=a
  
 " Show line numbers
-set number
+set number relativenumber
+
+" Toggle numbers with relative numbers
+augroup numbertoggle
+    autocmd!
+    autocmd BufEnter,FocusGained,InsertLeave * if &nu | set relativenumber | endif
+    autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
  
 " Turn on the WiLd menu
 set wildmenu
@@ -207,6 +222,12 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
  
+" Split windows below (e.g. terminal)
+set splitbelow
+
+" Terminal size
+set termwinsize=15x0
+
 " Close the current buffer
 map <leader>bd :Bclose<cr>
  
@@ -407,7 +428,8 @@ nmap [c <Plug>GitGutterPrevHunk
 nmap <Leader>hs <Plug>GitGutterStageHunk
 nmap <Leader>hu <Plug>GitGutterUnstageHunk
 
-map <C-a> :NERDTreeToggle<CR>
+map <C-a> :NERDTreeFocus<CR>
+autocmd VimEnter * NERDTree | wincmd p
 
 let author="Vlad Rusu"
 let gatename=substitute(toupper(expand("%:t")), "\\.", "_", "g")
