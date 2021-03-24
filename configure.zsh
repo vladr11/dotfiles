@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 TMUX_PROMPT="Do you want to use terminal with tmux?"
+VIM_PROMPT="Are you a vim user? Do you want vim to be a full feature editor?"
 
 function get_tmux_option()
 {
@@ -19,19 +20,51 @@ function get_tmux_option()
     done
 }
 
+function get_vim_option()
+{
+    echo $VIM_PROMPT
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes)
+                export WANTS_VIM=1
+                break
+                ;;
+            NO)
+                export WANTS_VIM=0
+                break
+                ;;
+        esac
+    done
+}
+
 function configure_osx()
 {
     get_tmux_option
+    get_vim_option
 
     # Install Homebrew if does not exist
     if ! type "$brew" > /dev/null; then
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     fi
 
+    brew update
     if [ $WANTS_TMUX -eq 1 ]; then
-        brew update
         brew install tmux
         brew link tmux
+    fi
+
+    if [ $WANTS_VIM -eq 1 ]; then
+        # Install node & npm
+        echo "Installing nodejs & npm"
+        brew install node
+
+        # Installs python3
+        echo "Installing python3"
+        brew install python
+
+        # Default vim is below the needed version and is not compiled with python3
+        echo "Installing macvim"
+        brew install macvim
     fi
 }
 
@@ -39,8 +72,15 @@ function configure_linux()
 {
     get_tmux_option
 
+    sudo apt-get update
+
     if [ $WANTS_TMUX -eq 1 ]; then
         sudo apt-get install tmux
+    fi
+
+    if [ $WANTS_VIM -eq 1 ]; then
+        sudo apt-get install build-essential cmake vim-nox python3-dev
+        sudo apt-get mono-complete golang nodejs npm default-jdk
     fi
 }
 
@@ -65,11 +105,19 @@ cp ./antigen.zsh $HOME/.antigen/antigen.zsh
 
 zsh $HOME/.antigen/antigen.zsh
 
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if [ $WANTS_VIM -eq 1 ]; then
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-cp .zshrc .vimrc $HOME
-mkdir -p $HOME/.vim
-cp plugins.vim $HOME/.vim/
+    cp .zshrc .vimrc $HOME
+    mkdir -p $HOME/.vim
+    cp plugins.vim $HOME/.vim/
+
+    vim -c "PlugInstall" -c "qa!"
+
+    echo "Installing YouCompleteMe language servers, please be patient..."
+    sleep 2
+    python3 $HOME/.vim/plugged/YouCompleteMe/install.py --all
+fi
 
 echo "*********************************"
 echo "*** When inside vim just run: ***"

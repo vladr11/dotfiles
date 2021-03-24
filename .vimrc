@@ -76,9 +76,6 @@ let g:pear_tree_repeatable_expand = 0
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
  
-" Turn on mouse interaction
-set mouse=a
- 
 " Show line numbers
 set number relativenumber
 
@@ -333,6 +330,8 @@ map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
 map <leader>n :cn<cr>
 map <leader>p :cp<cr>
  
+" Open fuzzy search window which opens a new tab with the selected file
+nnoremap <C-F> call fzf#run({'sink': 'tabedit', 'down': '20%'})
  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
@@ -351,7 +350,7 @@ map <leader>s? z=
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+noremap <Leader>z mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
  
 " Quickly open a buffer for scripbble
 map <leader>q :e ~/buffer<cr>
@@ -359,6 +358,16 @@ map <leader>q :e ~/buffer<cr>
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
  
+" Mappings for YcmCompleter goto functions
+nnoremap <leader>d :YcmCompleter GoTo<cr>
+nnoremap <leader>i :YcmCompleter GoToInclude<cr>
+nnoremap <leader>f :YcmCompleter GoToDefinition<cr>
+nnoremap <leader>s :YcmCompleter GoToSymbol 
+nnoremap <leader>e :YcmCompleter GoToReferenecs<cr>
+nnoremap <leader>m :YcmCompleter GoToImplementation<cr>
+nnoremap <leader>t :YcmCompleter GoToType<cr>
+nnoremap <leader>a :YcmCompleter GetDoc<cr>
+
  
  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
