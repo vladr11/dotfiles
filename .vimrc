@@ -331,7 +331,7 @@ map <leader>n :cn<cr>
 map <leader>p :cp<cr>
  
 " Open fuzzy search window which opens a new tab with the selected file
-nnoremap <C-F> call fzf#run({'sink': 'tabedit', 'down': '20%'})
+nnoremap <C-f> :call fzf#run({'sink': 'tabedit', 'down': '20%'})<CR>
  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
@@ -361,7 +361,7 @@ map <leader>pp :setlocal paste!<cr>
 " Mappings for YcmCompleter goto functions
 nnoremap <leader>d :YcmCompleter GoTo<cr>
 nnoremap <leader>i :YcmCompleter GoToInclude<cr>
-nnoremap <leader>f :YcmCompleter GoToDefinition<cr>
+nnoremap <leader>g :YcmCompleter GoToDefinition<cr>
 nnoremap <leader>s :YcmCompleter GoToSymbol 
 nnoremap <leader>e :YcmCompleter GoToReferenecs<cr>
 nnoremap <leader>m :YcmCompleter GoToImplementation<cr>
