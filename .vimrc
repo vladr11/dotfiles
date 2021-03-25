@@ -134,6 +134,9 @@ set novisualbell
 set t_vb=
 set tm=500
  
+" Airline config
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -171,8 +174,8 @@ set noswapfile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use spaces instead of tabs
-set expandtab
+" Use spaces instead of tabs - NOPE
+" set expandtab
  
 " Be smart when using tabs ;)
 set smarttab
@@ -331,7 +334,7 @@ map <leader>n :cn<cr>
 map <leader>p :cp<cr>
  
 " Open fuzzy search window which opens a new tab with the selected file
-nnoremap <C-f> :call fzf#run({'sink': 'tabedit', 'down': '20%'})<CR>
+nnoremap <C-f> :call fzf#run({'sink': 'e', 'down': '20%'})<CR>
  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
