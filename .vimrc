@@ -335,6 +335,7 @@ map <leader>p :cp<cr>
  
 " Open fuzzy search window which opens a new tab with the selected file
 nnoremap <C-f> :call fzf#run({'sink': 'e', 'down': '20%'})<CR>
+nnoremap <C-x> :Ag<CR>
  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
@@ -488,3 +489,6 @@ endfunction
 
 command! -nargs=1 Tdu call <SID>typedef_union(<q-args>)
 
+let g:ycm_confirm_extra_conf = 0
+
+let g:ackprg = 'ag --nogroup --nocolor --column'

@@ -65,6 +65,9 @@ function configure_osx()
         # Default vim is below the needed version and is not compiled with python3
         echo "Installing macvim"
         brew install macvim
+		
+		echo "Installing the_silver_searcher"
+		brew install the_silver_searcher
     fi
 }
 
@@ -80,7 +83,8 @@ function configure_linux()
 
     if [ $WANTS_VIM -eq 1 ]; then
         sudo apt-get install build-essential cmake vim-nox python3-dev
-        sudo apt-get mono-complete golang nodejs npm default-jdk
+        sudo apt-get install mono-complete golang nodejs npm default-jdk
+		sudo apt-get install silversearcher-ag
     fi
 }
 
