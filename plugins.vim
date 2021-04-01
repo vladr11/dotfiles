@@ -11,6 +11,7 @@ Plug 'ycm-core/YouCompleteMe'
 Plug 'tmsvg/pear-tree'
 Plug 'cespare/vim-toml'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'mileszs/ack.vim'
 
 call plug#end()

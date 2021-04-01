@@ -37,6 +37,13 @@ function get_vim_option()
     done
 }
 
+function install_powerline_fonts_osx()
+{
+	git clone https://github.com/powerline/fonts.git --depth=1
+	./fonts/install.sh
+	rm -rf fonts
+}
+
 function configure_osx()
 {
     get_tmux_option
@@ -48,6 +55,8 @@ function configure_osx()
     fi
 
     brew update
+	install_powerline_fonts_osx
+
     if [ $WANTS_TMUX -eq 1 ]; then
         brew install tmux
         brew link tmux
@@ -66,6 +75,7 @@ function configure_osx()
         echo "Installing macvim"
         brew install macvim
 		
+		# This is golden
 		echo "Installing the_silver_searcher"
 		brew install the_silver_searcher
     fi
@@ -76,6 +86,7 @@ function configure_linux()
     get_tmux_option
 
     sudo apt-get update
+	sudo apt-get install fonts-powerline
 
     if [ $WANTS_TMUX -eq 1 ]; then
         sudo apt-get install tmux

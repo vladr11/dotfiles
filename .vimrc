@@ -492,3 +492,5 @@ command! -nargs=1 Tdu call <SID>typedef_union(<q-args>)
 let g:ycm_confirm_extra_conf = 0
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
+
+let g:airline_powerline_fonts = 1
