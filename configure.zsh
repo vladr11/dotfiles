@@ -106,6 +106,8 @@ case "${uname_says}" in
         ;;
     Darwin*)
         configure_osx
+		# Copy iTerm profile so it can be used
+		cp iterm-profile.json "${HOME}/Library/Application Support/iTerm2/DynamicProfiles"
         ;;
     *)
         echo "No awesome configurations for non-Unix users..."
@@ -134,6 +136,7 @@ if [ $WANTS_VIM -eq 1 ]; then
     python3 $HOME/.vim/plugged/YouCompleteMe/install.py --all
 fi
 
+
 echo "*********************************"
 echo "*** When inside vim just run: ***"
 echo "*** :PlugInstall              ***"
@@ -153,6 +156,16 @@ if [ $WANTS_TMUX -eq 1 ]; then
     echo "*** Then wait 10-20 seconds   ***"
     echo "*********************************"
 fi
+
+echo "*********************************"
+echo "*** If you see random chars   ***"
+echo "*** on the screen, don't      ***"
+echo "*** panic just yet! Go to     ***"
+echo "*** iTerm Preferences ->      ***"
+echo "*** Profiles and change to    ***"
+echo "*** Vlad. You can duplicate   ***"
+echo "*** and customize everything. ***"
+echo "*********************************"
 
 echo "Done"
 
