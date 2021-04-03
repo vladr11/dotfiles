@@ -123,6 +123,9 @@ cp ./antigen.zsh $HOME/.antigen/antigen.zsh
 
 zsh $HOME/.antigen/antigen.zsh
 
+sudo chmod -R 755 /usr/local/share/zsh
+sudo chmod -R root:staff /usr/local/share/zsh
+
 if [ $WANTS_VIM -eq 1 ]; then
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
