@@ -84,6 +84,7 @@ function configure_osx()
 function configure_linux()
 {
     get_tmux_option
+    get_vim_option
 
     sudo apt-get update
 	sudo apt-get install fonts-powerline
