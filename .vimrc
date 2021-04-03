@@ -144,8 +144,6 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 " Enable syntax highlighting
 syntax enable
  
-colorscheme desert
-set background=dark
  
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -494,3 +492,7 @@ let g:ycm_confirm_extra_conf = 0
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
 let g:airline_powerline_fonts = 1
+let g:airline_theme = 'gruvbox'
+
+colorscheme gruvbox
+set background=dark

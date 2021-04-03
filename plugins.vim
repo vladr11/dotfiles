@@ -13,6 +13,7 @@ Plug 'cespare/vim-toml'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'mileszs/ack.vim'
+Plug 'morhetz/gruvbox'
 
 call plug#end()
 
