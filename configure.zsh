@@ -73,6 +73,7 @@ function configure_osx()
 
 	brew update
 	install_powerline_fonts_osx
+	brew install fzf
 
 	if [ $WANTS_TMUX -eq 1 ]; then
 		brew install tmux
@@ -107,6 +108,7 @@ function configure_linux()
 
 	sudo apt-get update
 	sudo apt-get install fonts-powerline
+	sudo apt-get install fzf
 
 	if [ $WANTS_TMUX -eq 1 ]; then
 		sudo apt-get install tmux

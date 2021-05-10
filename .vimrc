@@ -34,6 +34,7 @@
 "    -> Editing mappings
 "    -> vimgrep searching and cope displaying
 "    -> Spell checking
+"    -> Language servers
 "    -> Misc
 "    -> Helper functions
 "
@@ -347,7 +348,42 @@ map <leader>sp [s
 map <leader>sa zg
 map <leader>s? z=
  
- 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Language servers
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:ycm_language_server = 
+			\ [
+			\	{
+			\		'name': 'haskell',
+			\		'cmdline': ['haskell-language-server-wrapper', '--lsp'],
+			\		'filetypes': [ 'haskell', 'lhaskell' ],
+			\		'project_root_files': [ 'stack.yaml', 'cabal.project', 'package.yaml', 'hie.yaml' ]
+			\	},
+			\	{
+			\		'name': 'docker',
+			\		'filetypes': [ 'dockerfile' ],
+			\		'cmdline': [ 'docker-langserver', '--stdio' ]
+			\	},
+			\	{
+			\		'name': 'json',
+			\		'cmdline': [ 'node', 'vscode-json-languageserver', '--stdio' ],
+			\		'fieltypes': [ 'json' ],
+			\		'capabilities': { 'textDocument': { 'completion': { 'completionItem': { 'snippetSupport': v:true } } } },
+			\	},
+			\	{
+			\		'name': 'yaml',
+			\		'cmdline': [ 'node', 'yaml-language-server', '--stdio' ],
+			\		'filetypes': [ 'yaml' ],
+			\		'capabilities': { 'textDocument': { 'completion': { 'completionIdem': { 'snippetSupport': v:true } } } },
+			\	},
+			\	{
+			\		'name': 'ruby',
+			\		'cmdline': [ 'solargraph', 'stdio' ],
+			\		'filetypes': [ 'ruby' ]
+			\	}
+			\ ]
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -365,7 +401,7 @@ nnoremap <leader>d :YcmCompleter GoTo<cr>
 nnoremap <leader>i :YcmCompleter GoToInclude<cr>
 nnoremap <leader>g :YcmCompleter GoToDefinition<cr>
 nnoremap <leader>s :YcmCompleter GoToSymbol 
-nnoremap <leader>e :YcmCompleter GoToReferenecs<cr>
+nnoremap <leader>e :YcmCompleter GoToReferences<cr>
 nnoremap <leader>m :YcmCompleter GoToImplementation<cr>
 nnoremap <leader>t :YcmCompleter GoToType<cr>
 nnoremap <leader>a :YcmCompleter GetDoc<cr>
@@ -488,6 +524,7 @@ endfunction
 command! -nargs=1 Tdu call <SID>typedef_union(<q-args>)
 
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_auto_hover = ''
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
 

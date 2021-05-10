@@ -15,16 +15,13 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
     exec tmux
 fi
 
-source ~/.antigen/antigen.zsh
+source ~//antigen/antigen.zsh
 
 antigen use oh-my-zsh
 
-if command -v tmux &> /dev/null; then
-    antigen bundle tmux
-    antigen bundle tmuxinator
-fi
-
 antigen bundle git
+antigen bundle tmux
+antigen bundle tmuxinator
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen bundle pod
@@ -74,6 +71,20 @@ zstyle ':vcs_info:git*' formats 'on branch %F{magenta}%b%f'
 
 PROMPT=$'\n''%F{yellow}$(whoami)@$(hostname -s)%f in %F{cyan}%~%f ${vcs_info_msg_0_} %(?..%F{red}%?%f)'$'\n''%(?.%F{green}✔.%F{red}✘)%f  '
 
+function cd_ls()
+{
+    cd $1
+    ls
+}
+
+
+function mkdir_cd()
+{
+    mkdir $1
+    cd $1
+}
+
+
 compose-remake()
 {
     docker-compose stop $1
@@ -81,7 +92,23 @@ compose-remake()
     docker-compose start $1
 }
 
+alias fstree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+fi
+
 if test -e $HOME/.zshrcextra; then
     . $HOME/.zshrcextra
 fi
 
+[ -f "/Users/linnify/.ghcup/env" ] && source "/Users/linnify/.ghcup/env" # ghcup-env
+
+fd() {
+	local dir
+	dir=$(find ${1:-.} -path '*/\.*' -prune -o -type d -print 2> /dev/null | fzf +m) && cd "$dir"
+}
+
+fh() {
+	eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//' )
+}
