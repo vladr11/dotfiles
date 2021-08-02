@@ -381,6 +381,11 @@ let g:ycm_language_server =
 			\		'name': 'ruby',
 			\		'cmdline': [ 'solargraph', 'stdio' ],
 			\		'filetypes': [ 'ruby' ]
+			\	},
+			\	{
+			\		'name': 'terraform',
+			\		'cmdline': [ 'terraform-ls', 'serve' ],
+			\		'filetypes': [ 'terraform', 'tf' ]
 			\	}
 			\ ]
 

@@ -14,6 +14,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'mileszs/ack.vim'
 Plug 'morhetz/gruvbox'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'szymonmaszke/vimpyter'
+Plug 'hashivim/vim-terraform'
 
 call plug#end()
 
