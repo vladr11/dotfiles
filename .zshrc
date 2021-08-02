@@ -15,7 +15,7 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
     exec tmux
 fi
 
-source ~//antigen/antigen.zsh
+source ~/.antigen/antigen.zsh
 
 antigen use oh-my-zsh
 
