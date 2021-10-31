@@ -87,6 +87,9 @@ osx: brew_osx powerline_fonts_osx fzf_osx the_silver_searcher_osx tmux_osx node_
 
 ### Arch ###
 
+update_pacman_arch:
+	sudo pacman -Syu --noconfirm
+
 yay_arch:
 	if ! type "yay" > /dev/null; then
 		git clone https://aur.archlinux.org/yay.git
@@ -98,6 +101,9 @@ yay_arch:
 
 zsh_arch:
 	sudo pacman -S --noconfirm zsh
+
+cmake_arch:
+	sudo pacman -S --noconfirm cmake
 
 powerline_fonts_arch:
 	git clone https://github.com/powerline/fonts.git --depth=1
@@ -151,7 +157,7 @@ antigen_arch: zsh_arch
 	cp ./antigen.zsh ${HOME}/.antigen/antigen.zsh
 	zsh ${HOME}/.antigen/antigen.zsh
 
-vim_config_arch:
+vim_config_arch: cmake_arch
 	curl -fLo ${HOME}/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	cp .vimrc ${HOME}
 	mkdir -p ${HOME}/.vim
@@ -165,4 +171,4 @@ zsh_config_arch: antigen_arch
 tmux_config_arch: tmux_arch
 	cp .tmux.conf ${HOME}
 
-arch: zsh_arch powerline_fonts_arch fzf_arch the_silver_searcher_arch node_arch python_arch go_arch rust_arch zsh_config_arch vim_config_arch tmux_config_arch pyenv_arch rbenv_arch
+arch: update_pacman_arch zsh_arch powerline_fonts_arch fzf_arch the_silver_searcher_arch node_arch python_arch go_arch rust_arch zsh_config_arch vim_config_arch tmux_config_arch pyenv_arch rbenv_arch
