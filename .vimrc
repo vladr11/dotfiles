@@ -4,7 +4,7 @@
 "       vlad.rusu11@gmail.com
 "
 " Version:
-"       5.0 - 29/05/12 15:43:36
+"       2.0 - 01/11/21 00:10:10
 "
 " Awesome_version:
 "       Get this config, nice color schemes and lots of plugins!

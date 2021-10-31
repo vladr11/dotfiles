@@ -69,7 +69,10 @@ antigen_osx:
 	sudo chmod -R 755 /usr/local/share/zsh
 	sudo chmod -R root:staff /usr/local/share/zsh
 
-vim_config_osx: macvim_osx
+notedown_osx:
+	pip install notedown
+
+vim_config_osx: macvim_osx notedown_osx
 	curl -fLo ${HOME}/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	cp .vimrc ${HOME}
 	mkdir -p ${HOME}/.vim
@@ -122,8 +125,11 @@ tmux_arch:
 node_arch:
 	sudo pacman -S --noconfirm nodejs
 
+npm_arch:
+	sudo pacman -S --noconfirm npm
+
 python_arch:
-	sudo pacman -S --noconfirm python
+	sudo pacman -S --noconfirm python python-pip
 
 go_arch:
 	sudo pacman -S --noconfirm go
@@ -157,7 +163,10 @@ antigen_arch: zsh_arch
 	cp ./antigen.zsh ${HOME}/.antigen/antigen.zsh
 	zsh ${HOME}/.antigen/antigen.zsh
 
-vim_config_arch: cmake_arch
+notedown_arch:
+	pip install notedown
+
+vim_config_arch: cmake_arch notedown_arch
 	curl -fLo ${HOME}/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	cp .vimrc ${HOME}
 	mkdir -p ${HOME}/.vim
@@ -171,4 +180,4 @@ zsh_config_arch: antigen_arch
 tmux_config_arch: tmux_arch
 	cp .tmux.conf ${HOME}
 
-arch: update_pacman_arch zsh_arch powerline_fonts_arch fzf_arch the_silver_searcher_arch node_arch python_arch go_arch rust_arch zsh_config_arch vim_config_arch tmux_config_arch pyenv_arch rbenv_arch
+arch: update_pacman_arch zsh_arch powerline_fonts_arch fzf_arch the_silver_searcher_arch node_arch npm_arch python_arch go_arch rust_arch zsh_config_arch vim_config_arch tmux_config_arch pyenv_arch rbenv_arch
