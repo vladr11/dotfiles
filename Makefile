@@ -114,7 +114,7 @@ tmux_arch:
 	sudo pacman -S --noconfirm tmux
 
 node_arch:
-	sudo pacman -S --noconfirm node
+	sudo pacman -S --noconfirm nodejs
 
 python_arch:
 	sudo pacman -S --noconfirm python
