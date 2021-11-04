@@ -4,26 +4,18 @@ Reasonable dotfiles for a quick setup
 
 ## Install
 
-To quickly configure the scripts run (you must have `zsh` installed)
+To quickly configure the scripts run (you must have `make` installed)
 
-```zsh
-./configure.zsh
+### Arch Linux
+
+```shell
+make arch
 ```
 
-Here, you will be asked if you want to use `tmux`. If so, tmux will be installed and set as entrypoint when you start zsh. Otherwise the `tmux`'s installation will be skipped.
-
-### If you do not have zsh installed
-
-#### Linux
+### OS X
 
 ```bash
-sudo apt-get install zsh
-```
-
-#### OS X
-
-```bash
-brew install zsh
+make osx
 ```
 
 ## Customize your configurations

@@ -53,16 +53,6 @@ fi
 
 antigen apply
 
-function battery_level()
-{
-    ioreg -n AppleSmartBattery -r | awk '$1~/Capacity/{c[$1]=$3} END{OFMT="%.2f%%"; max=c["\"MaxCapacity\""]; print (max>0? 100*c["\"CurrentCapacity\""]/max: "?")}'
-}
-
-function charging()
-{
-    ioreg -n AppleSmartBattery -r | awk '$1~/ExternalConnected/{gsub("Yes", "y");gsub("No", "n"); print substr($0, length, 1)}'
-}
-
 autoload -Uz vcs_info
 autoload -U colors
 setopt prompt_subst
@@ -72,20 +62,6 @@ zstyle ':vcs_info:git*' formats 'on branch %F{magenta}%b%f'
 
 PROMPT=$'\n''%F{yellow}$(whoami)@$(hostname -s)%f in %F{cyan}%~%f ${vcs_info_msg_0_} %(?..%F{red}%?%f)'$'\n''%(?.%F{green}✔.%F{red}✘)%f  '
 
-function cd_ls()
-{
-    cd $1
-    ls
-}
-
-
-function mkdir_cd()
-{
-    mkdir $1
-    cd $1
-}
-
-
 compose-remake()
 {
     docker-compose stop $1
@@ -94,16 +70,6 @@ compose-remake()
 }
 
 alias fstree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-
-if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init -)"
-fi
-
-if test -e $HOME/.zshrcextra; then
-    . $HOME/.zshrcextra
-fi
-
-[ -f "/Users/linnify/.ghcup/env" ] && source "/Users/linnify/.ghcup/env" # ghcup-env
 
 fd() {
 	local dir

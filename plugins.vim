@@ -17,6 +17,8 @@ Plug 'morhetz/gruvbox'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'szymonmaszke/vimpyter'
 Plug 'hashivim/vim-terraform'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'vim-scripts/indentpython.vim'
 
 call plug#end()
 
