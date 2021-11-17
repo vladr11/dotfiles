@@ -19,6 +19,8 @@ Plug 'szymonmaszke/vimpyter'
 Plug 'hashivim/vim-terraform'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'vim-scripts/indentpython.vim'
+Plug 'puremourning/vimspector'
+Plug 'Yggdroot/indentLine'
 
 call plug#end()
 

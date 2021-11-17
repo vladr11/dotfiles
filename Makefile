@@ -6,9 +6,7 @@ powerline_fonts_osx:
 	rm -rf fonts
 
 homebrew_osx:
-	if ! type "brew" > /dev/null; then
-		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-	fi
+	if ! type "brew" &> /dev/null; then /bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"; fi
 
 brew_update_osx:
 	brew update
@@ -35,11 +33,20 @@ node_osx:
 python_osx:
 	brew install python
 
+java_osx:
+	brew cask java
+	brew cask install addoptopenjdk8
+
+cmake_osx:
+	brew install cmake
+
 macvim_osx:
 	brew install macvim
 
 go_osx:
 	brew install go
+	echo "" >> ${HOME}/.zshrc
+	echo "export PATH=\$${HOME}/go/bin:\$${PATH}" >> ${HOME}/.zshrc
 
 rust_osx:
 	brew install rust
@@ -48,8 +55,9 @@ pyenv_install_osx:
 	curl -L "https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer" | /bin/bash
 
 pyenv_setup_osx:
-	echo "export PATH=\${HOME}/.pyenv/shims/:\${PATH}" >> ${HOME}/.zshrc
-	echo 'eval "\$(pyenv init -)"' >> ${HOME}/.zshrc
+	echo "" >> ${HOME}/.zshrc
+	echo "export PATH=\$${HOME}/.pyenv/shims/:\$${PATH}" >> ${HOME}/.zshrc
+	echo 'eval "\$$(pyenv init -)"' >> ${HOME}/.zshrc
 
 pyenv_osx: pyenv_install_osx
 
@@ -57,8 +65,9 @@ rbenv_install_osx:
 	brew install rbenv
 
 rbenv_setup_osx:
-	echo "export PATH=\${HOME}/.rbenv/shims/:\${PATH}" >> ${HOME}/.zshrc
-	echo 'eval "\$(tbenv init -)"' >> ${HOME}/.zshrc
+	echo "" >> ${HOME}/.zshrc
+	echo "export PATH=\$${HOME}/.rbenv/shims/:\$${PATH}" >> ${HOME}/.zshrc
+	echo 'eval "\$$(rbenv init -)"' >> ${HOME}/.zshrc
 
 rbenv_osx: rbenv_install_osx rbenv_setup_osx
 
@@ -67,12 +76,12 @@ antigen_osx:
 	cp ./antigen.zsh ${HOME}/.antigen/antigen.zsh
 	zsh ${HOME}/.antigen/antigen.zsh
 	sudo chmod -R 755 /usr/local/share/zsh
-	sudo chmod -R root:staff /usr/local/share/zsh
+	sudo chown -R root:staff /usr/local/share/zsh
 
 notedown_osx:
 	pip install notedown
 
-vim_config_osx: macvim_osx notedown_osx
+vim_config_osx: macvim_osx cmake_osx
 	curl -fLo ${HOME}/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	cp .vimrc ${HOME}
 	mkdir -p ${HOME}/.vim
@@ -86,7 +95,7 @@ zsh_config_osx: antigen_osx
 tmux_config_osx: tmux_osx
 	cp .tmux.conf ${HOME}
 
-osx: brew_osx powerline_fonts_osx fzf_osx the_silver_searcher_osx tmux_osx node_osx python_osx go_osx rust_osx zsh_config_osx vim_config_osx tmux_config_osx pyenv_osx rbenv_osx
+osx: brew_osx powerline_fonts_osx fzf_osx the_silver_searcher_osx tmux_osx node_osx python_osx go_osx rust_osx java_osx zsh_config_osx vim_config_osx tmux_config_osx pyenv_osx rbenv_osx
 
 ### Arch ###
 
@@ -141,8 +150,8 @@ pyenv_install_arch:
 	yay -S --noconfirm pyenv
 
 pyenv_setup_arch:
-	echo "export PATH=\${HOME}/.pyenv/shims/:\${PATH}" >> ${HOME}/.zshrc
-	echo 'eval "\${pyenv init -}"' >> ${HOME}/.zshrc
+	echo "export PATH=\$${HOME}/.pyenv/shims/:\$${PATH}" >> ${HOME}/.zshrc
+	echo 'eval "\$${pyenv init -}"' >> ${HOME}/.zshrc
 
 pyenv_arch: pyenv_install_arch pyenv_setup_arch
 
@@ -153,8 +162,8 @@ rbenv_install_arch: ruby_arch
 	yay -S --noconfirm rbenv
 
 rbenv_setup_arch:
-	echo "export PATH=\${HOME}/.rbenv/shims/\${PATH}" >> ${HOME}/.zshrc
-	echo 'eval "\$(rbenv init -)"' >> ${HOME}/.zshrc
+	echo "export PATH=\$${HOME}/.rbenv/shims/\$${PATH}" >> ${HOME}/.zshrc
+	echo 'eval "\$$(rbenv init -)"' >> ${HOME}/.zshrc
 
 rbenv_arch: rbenv_install_arch rbenv_setup_arch
 

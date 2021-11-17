@@ -360,7 +360,7 @@ let g:ycm_language_server =
 			\	},
 			\	{
 			\		'name': 'yaml',
-			\		'cmdline': [ 'node', 'yaml-language-server', '--stdio' ],
+			\		'cmdline': [ 'yaml-language-server', '--stdio' ],
 			\		'filetypes': [ 'yaml' ],
 			\		'capabilities': { 'textDocument': { 'completion': { 'completionIdem': { 'snippetSupport': v:true } } } },
 			\	},
@@ -398,7 +398,9 @@ nnoremap <leader>m :YcmCompleter GoToImplementation<cr>
 nnoremap <leader>t :YcmCompleter GoToType<cr>
 nnoremap <leader>a :YcmCompleter GetDoc<cr>
 
- 
+
+let g:vimspector_enable_mappings = 'HUMAN'
+
  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
@@ -458,6 +460,12 @@ function! <SID>BufcloseCloseIt()
    if buflisted(l:currentBufNum)
      execute("bdelete! ".l:currentBufNum)
    endif
+endfunction
+
+function Inc(...)
+	let result = g:inc
+	let g:inc += a:0 > 0 ? a:1 : 1
+	return result
 endfunction
 
 so ~/.vim/plugins.vim
