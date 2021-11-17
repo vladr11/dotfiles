@@ -34,8 +34,8 @@ python_osx:
 	brew install python
 
 java_osx:
-	brew cask java
-	brew cask install addoptopenjdk8
+	brew tap adoptopenjdk/openjdk
+	brew install --cask adoptopenjdk8
 
 cmake_osx:
 	brew install cmake
@@ -56,18 +56,19 @@ pyenv_install_osx:
 
 pyenv_setup_osx:
 	echo "" >> ${HOME}/.zshrc
-	echo "export PATH=\$${HOME}/.pyenv/shims/:\$${PATH}" >> ${HOME}/.zshrc
-	echo 'eval "\$$(pyenv init -)"' >> ${HOME}/.zshrc
+	echo "export PATH=\$${HOME}/.pyenv/shims:\$${PATH}" >> ${HOME}/.zshrc
+	echo "export PATH=\$${HOME}/.pyenv/bin:\$${PATH}" >> ${HOME}/.zshrc
+	echo 'eval "$$(pyenv init -)"' >> ${HOME}/.zshrc
 
-pyenv_osx: pyenv_install_osx
+pyenv_osx: pyenv_install_osx pyenv_setup_osx
 
 rbenv_install_osx:
 	brew install rbenv
 
 rbenv_setup_osx:
 	echo "" >> ${HOME}/.zshrc
-	echo "export PATH=\$${HOME}/.rbenv/shims/:\$${PATH}" >> ${HOME}/.zshrc
-	echo 'eval "\$$(rbenv init -)"' >> ${HOME}/.zshrc
+	echo "export PATH=\$${HOME}/.rbenv/shims:\$${PATH}" >> ${HOME}/.zshrc
+	echo 'eval "$$(rbenv init -)"' >> ${HOME}/.zshrc
 
 rbenv_osx: rbenv_install_osx rbenv_setup_osx
 
@@ -75,8 +76,6 @@ antigen_osx:
 	mkdir -p ${HOME}/.antigen
 	cp ./antigen.zsh ${HOME}/.antigen/antigen.zsh
 	zsh ${HOME}/.antigen/antigen.zsh
-	sudo chmod -R 755 /usr/local/share/zsh
-	sudo chown -R root:staff /usr/local/share/zsh
 
 notedown_osx:
 	pip install notedown
@@ -93,6 +92,7 @@ zsh_config_osx: antigen_osx
 	cp .zshrc ${HOME}
 
 tmux_config_osx: tmux_osx
+	git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
 	cp .tmux.conf ${HOME}
 
 osx: brew_osx powerline_fonts_osx fzf_osx the_silver_searcher_osx tmux_osx node_osx python_osx go_osx rust_osx java_osx zsh_config_osx vim_config_osx tmux_config_osx pyenv_osx rbenv_osx
