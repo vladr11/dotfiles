@@ -57,6 +57,9 @@ nmap <leader>w :w!<cr>
 
 " Make pear-tree not delete closing pair 
 let g:pear_tree_repeatable_expand = 0
+
+" Reset conceallevel set by indentLine
+let g:indentLine_conceallevel = 0
  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -342,6 +345,11 @@ map <leader>s? z=
 let g:ycm_language_server = 
 			\ [
 			\	{
+			\		'name': 'terraform',
+			\		'cmdline': [ 'terraform-ls', 'serve' ],
+			\		'filetypes': [ 'terraform', 'tf' ]
+			\	},
+			\	{
 			\		'name': 'haskell',
 			\		'cmdline': ['haskell-language-server-wrapper', '--lsp'],
 			\		'filetypes': [ 'haskell', 'lhaskell' ],
@@ -355,24 +363,19 @@ let g:ycm_language_server =
 			\	{
 			\		'name': 'json',
 			\		'cmdline': [ 'node', 'vscode-json-languageserver', '--stdio' ],
-			\		'fieltypes': [ 'json' ],
+			\		'filetypes': [ 'json' ],
 			\		'capabilities': { 'textDocument': { 'completion': { 'completionItem': { 'snippetSupport': v:true } } } },
 			\	},
 			\	{
 			\		'name': 'yaml',
 			\		'cmdline': [ 'yaml-language-server', '--stdio' ],
 			\		'filetypes': [ 'yaml' ],
-			\		'capabilities': { 'textDocument': { 'completion': { 'completionIdem': { 'snippetSupport': v:true } } } },
+			\		'capabilities': { 'textDocument': { 'completion': { 'completionItem': { 'snippetSupport': v:true } } } },
 			\	},
 			\	{
 			\		'name': 'ruby',
 			\		'cmdline': [ 'solargraph', 'stdio' ],
 			\		'filetypes': [ 'ruby' ]
-			\	},
-			\	{
-			\		'name': 'terraform',
-			\		'cmdline': [ 'terraform-ls', 'serve' ],
-			\		'filetypes': [ 'terraform', 'tf' ]
 			\	}
 			\ ]
 
@@ -533,3 +536,7 @@ let g:airline_theme = 'gruvbox'
 
 colorscheme gruvbox
 set background=dark
+
+" Mail
+
+let g:himalaya_mailbox_picker = 'fzf'

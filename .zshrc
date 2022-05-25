@@ -23,6 +23,7 @@ antigen bundle git
 antigen bundle tmux
 antigen bundle tmuxinator
 antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle poetry
 
 antigen bundle pod
@@ -53,6 +54,8 @@ fi
 
 antigen apply
 
+ZSH_AUTOSUGGEST_STRATEGY=(completion history)
+
 autoload -Uz vcs_info
 autoload -U colors
 setopt prompt_subst
@@ -77,5 +80,39 @@ fd() {
 }
 
 fh() {
-	eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//' )
+	CMD=$( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//' )
+	eval $CMD
+	print -sr -- "${CMD}"
 }
+
+function zshaddhistory() {
+	emulate -L zsh
+	if ! [[ "$1" =~ "fh" ]]; then
+		print -sr -- "${1%%$'\n'}"
+	else
+		return 1
+	fi
+}
+
+search_git_lost_found() {
+	git fsck --lost-found | awk '{ split($0, a, " "); if (a[2] == "commit") print(a[3]) }' | xargs git show --shortstat
+}
+
+export PATH=${HOME}/.rbenv/shims:${PATH}
+eval "$(rbenv init -)"
+
+export PATH=${HOME}/.pyenv/shims:${PATH}
+export PATH=${HOME}/.pyenv/bin:${PATH}
+eval "$(pyenv init -)"
+
+export PATH=${HOME}/go/bin:${PATH}
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/vladrusu/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/vladrusu/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/vladrusu/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/vladrusu/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform
+export PATH=/Users/vladrusu/Downloads/google-cloud-sdk/bin:${PATH}
