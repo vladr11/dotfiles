@@ -534,7 +534,7 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'gruvbox'
 
-colorscheme gruvbox
+" colorscheme gruvbox
 set background=dark
 
 " Mail

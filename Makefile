@@ -190,3 +190,76 @@ tmux_config_arch: tmux_arch
 	cp .tmux.conf ${HOME}
 
 arch: update_pacman_arch zsh_arch powerline_fonts_arch fzf_arch the_silver_searcher_arch node_arch npm_arch python_arch go_arch rust_arch zsh_config_arch vim_config_arch tmux_config_arch pyenv_arch rbenv_arch
+
+### Debian ###
+
+install_dev_libs_debian:
+	sudo apt-get install -y make build-essentials libssl-dev zliblg-dev libbz-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev
+
+update_apt_debian:
+	sudo apt-get update -y
+
+zsh_debian:
+	sudo apt-get install -y zsh
+
+cmake_debian:
+	sudo apt-get install -y cmake
+
+powerline_fonts_debian:
+	git clone https://github.com/powerline/fonts.git --depth=1
+	./fonts/install.sh
+	rm -rf fonts
+
+fzf_debian:
+	sudo apt-get install -y fzf
+
+the_silver_searcher_debian:
+	sudo apt-get install -y silversearcher-ag
+
+tmux_debian:
+	sudo apt-get install -y tmux
+
+node_debian:
+	sudo apt-get install -y nodejs
+
+npm_debian:
+	sudo apt-get install -y npm
+
+go_debian:
+	sudo apt-get install -y golang
+
+rust_debian:
+	sudo apt-get install -y rustc
+
+pyenv_install_debian:
+	curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+
+pyenv_setup_debian:
+	echo "export PATH=\$${HOME}/.pyenv/shims/:\$${PATH}" >> ${HOME}/.zshrc
+	echo 'eval "\$${pyenv init -}"' >> ${HOME}/.zshrc
+
+pyenv_debian: pyenv_install_debian pyenv_setup_debian
+
+antigen_debian: zsh_debian
+	mkdir -p ${HOME}/.antigen
+	cp ./antigen.zsh ${HOME}/.antigen/antigen.zsh
+	zsh ${HOME}/.antigen/antigen.zsh
+
+notedown_debian:
+	pip install notedown
+
+vim_config_debian: cmake_debian notedown_debian
+	curl -fLo ${HOME}/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	cp .vimrc ${HOME}
+	mkdir -p ${HOME}/.vim
+	cp plugins.vim ${HOME}/.vim/
+	vim -c "PlugInstall" -c "qa!"
+	python3 ${HOME}/.vim/plugged/YouCompleteMe/install.py --all
+
+zsh_config_debian: antigen_debian
+	cp .zshrc ${HOME}
+
+tmux_config_debian: tmux_debian
+	cp .tmux.conf ${HOME}
+
+debian: update_apt_debian zsh_debian powerline_fonts_debian fzf_debian the_silver_searcher_debian node_debian npm_debian go_debian rust_debian zsh_config_debian vim_config_debian tmux_config_debian pyenv_debian
