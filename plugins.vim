@@ -21,6 +21,15 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'vim-scripts/indentpython.vim'
 Plug 'puremourning/vimspector'
 Plug 'Yggdroot/indentLine'
+" Plug 'vladr11/vim-python-fold'
+Plug 'ziglang/zig.vim'
+Plug 'uarun/vim-protobuf'
+Plug 'pangloss/vim-javascript'
+Plug 'heavenshell/vim-jsdoc', { 'for': ['javascript', 'javascript.jsx', 'typescript'], 'do': 'make install' }
+Plug 'sjl/gundo.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 call plug#end()
 

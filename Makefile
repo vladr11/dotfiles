@@ -95,7 +95,11 @@ tmux_config_osx: tmux_osx
 	git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
 	cp .tmux.conf ${HOME}
 
-osx: brew_osx powerline_fonts_osx fzf_osx the_silver_searcher_osx tmux_osx node_osx python_osx go_osx rust_osx java_osx zsh_config_osx vim_config_osx tmux_config_osx pyenv_osx rbenv_osx
+snippets_osx:
+	mkdir -p ${HOME}/.vim/UltiSnips
+	cp -Rf snippets ~${HOME}/.vim/UltiSnips
+
+osx: brew_osx powerline_fonts_osx fzf_osx the_silver_searcher_osx tmux_osx node_osx python_osx go_osx rust_osx java_osx zsh_config_osx vim_config_osx tmux_config_osx pyenv_osx rbenv_osx snippets_osx
 
 ### Arch ###
 
@@ -189,7 +193,11 @@ zsh_config_arch: antigen_arch
 tmux_config_arch: tmux_arch
 	cp .tmux.conf ${HOME}
 
-arch: update_pacman_arch zsh_arch powerline_fonts_arch fzf_arch the_silver_searcher_arch node_arch npm_arch python_arch go_arch rust_arch zsh_config_arch vim_config_arch tmux_config_arch pyenv_arch rbenv_arch
+snippets_arch:
+	mkdir -p ${HOME}/.vim/UltiSnips
+	cp -Rf snippets ~${HOME}/.vim/UltiSnips
+
+arch: update_pacman_arch zsh_arch powerline_fonts_arch fzf_arch the_silver_searcher_arch node_arch npm_arch python_arch go_arch rust_arch zsh_config_arch vim_config_arch tmux_config_arch pyenv_arch rbenv_arch snippets_arch
 
 ### Debian ###
 
@@ -262,4 +270,8 @@ zsh_config_debian: antigen_debian
 tmux_config_debian: tmux_debian
 	cp .tmux.conf ${HOME}
 
-debian: update_apt_debian zsh_debian powerline_fonts_debian fzf_debian the_silver_searcher_debian node_debian npm_debian go_debian rust_debian zsh_config_debian vim_config_debian tmux_config_debian pyenv_debian
+snippets_debian:
+	mkdir -p ${HOME}/.vim/UltiSnips
+	cp -Rf snippets ~${HOME}/.vim/UltiSnips
+
+debian: update_apt_debian zsh_debian powerline_fonts_debian fzf_debian the_silver_searcher_debian node_debian npm_debian go_debian rust_debian zsh_config_debian vim_config_debian tmux_config_debian pyenv_debian snippets_debian
