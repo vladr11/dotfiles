@@ -80,3 +80,16 @@ class ${1:MyModel}(${2:Base}):
 	${4:${VISUAL:id = Column(Integer, primary_key=True)}}
 	${5:${VISUAL:column}}
 endsnippet
+
+snippet tcontext "Context manager typed" b
+def __enter__(self) -> ${1:None}:
+	${2:${VISUAL:pass}}
+
+def __exit__(
+	self,
+	exception_type: Optional[Type[BaseException]],
+	exception_value: Optional[BaseException],
+	traceback: Optional[Type[TracebackType]],
+) -> None:
+	${3:${VISUAL:pass}}
+endsnippet
