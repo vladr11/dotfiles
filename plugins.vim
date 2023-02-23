@@ -30,6 +30,8 @@ Plug 'sjl/gundo.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'szw/vim-maximizer'
+Plug 'wellle/context.vim'
 
 call plug#end()
 

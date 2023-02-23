@@ -325,6 +325,9 @@ map <leader>p :cp<cr>
 " Open fuzzy search window which opens a new tab with the selected file
 nnoremap <C-f> :call fzf#run({'sink': 'e', 'down': '20%'})<CR>
 nnoremap <C-x> :Ag<CR>
+
+" command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
+" nnoremap <C-x> :Find<CR>
  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
@@ -361,6 +364,11 @@ let g:ycm_language_server =
 			\		'cmdline': [ 'docker-langserver', '--stdio' ]
 			\	},
 			\	{
+			\		'name': 'zls',
+			\		'filetypes': [ 'zig' ],
+			\		'cmdline': [ '/Users/vladrusu/zls/zls/zig-out/bin/zls' ]
+			\	},
+			\	{
 			\		'name': 'json',
 			\		'cmdline': [ 'node', 'vscode-json-languageserver', '--stdio' ],
 			\		'filetypes': [ 'json' ],
@@ -383,7 +391,11 @@ let g:ycm_language_server =
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader>z mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+noremap <Leader>p mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+" Folding
+noremap <leader>z zA
+noremap zz za
  
 " Quickly open a buffer for scripbble
 map <leader>q :e ~/buffer<cr>
@@ -401,6 +413,7 @@ nnoremap <leader>m :YcmCompleter GoToImplementation<cr>
 nnoremap <leader>t :YcmCompleter GoToType<cr>
 nnoremap <leader>a :YcmCompleter GetDoc<cr>
 
+let g:ycm_add_preview_to_completeopt=0
 
 let g:vimspector_enable_mappings = 'HUMAN'
 
@@ -478,6 +491,10 @@ nmap [c <Plug>GitGutterPrevHunk
 nmap <Leader>hs <Plug>GitGutterStageHunk
 nmap <Leader>hu <Plug>GitGutterUnstageHunk
 
+let g:UltiSnipsExpandTrigger="<c-l>"
+let g:UltiSnipsJumpForwardTrigger="<c-l>"
+let g:UltiSnipsJumpBackwardTrigger="<c-h>"
+
 map <C-a> :NERDTreeFocus<CR>
 autocmd VimEnter * NERDTree | wincmd p
 
@@ -534,9 +551,24 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'gruvbox'
 
-" colorscheme gruvbox
+colorscheme gruvbox
 set background=dark
 
 " Mail
 
 let g:himalaya_mailbox_picker = 'fzf'
+
+" Protos
+
+augroup filetype
+	au! BufRead,BufNewFile *.proto setfiletype proto
+augroup end
+
+" Javascript
+autocmd FileType javascript setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+autocmd FileType typescript setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+
+let g:gundo_prefer_python3 = 1
+
+" Maximizer
+nnoremap <silent><C-m> :MaximizerToggle<CR>
