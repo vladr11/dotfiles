@@ -32,6 +32,9 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'szw/vim-maximizer'
 Plug 'wellle/context.vim'
+Plug 'pantharshit00/vim-prisma'
+Plug 'tpope/vim-fugitive'
+Plug 'easymotion/vim-easymotion'
 
 call plug#end()
 

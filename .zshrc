@@ -11,6 +11,7 @@ function machine_name()
     echo ${machine}
 }
 
+eval "$(/opt/homebrew/bin/brew shellenv)";
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
     exec tmux
 fi
@@ -35,6 +36,9 @@ antigen bundle ssh-agent
 antigen bundle pip
 antigen bundle python
 antigen bundle virtualenv
+
+export NVM_COMPLETION=true
+antigen bundle lukechilds/zsh-nvm
 
 antigen bundle kubectl
 
@@ -98,6 +102,20 @@ search_git_lost_found() {
 	git fsck --lost-found | awk '{ split($0, a, " "); if (a[2] == "commit") print(a[3]) }' | xargs git show --shortstat
 }
 
+bda() {
+	git diff --name-only --relative --diff-filter=d | xargs bat --diff
+}
+
+bd() {
+	if [[ ${#@} -eq 0 ]]; then
+		bda
+	else
+		bat --diff $@
+	fi
+}
+
+alias dcd="docker-compose -f dev.docker-compose.yml"
+
 export PATH=${HOME}/.rbenv/shims:${PATH}
 eval "$(rbenv init -)"
 
@@ -107,12 +125,36 @@ eval "$(pyenv init -)"
 
 export PATH=${HOME}/go/bin:${PATH}
 
+autoload -U +X bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
+complete -o nospace -C /opt/homebrew/bin/terraform terraform
+
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/vladrusu/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/vladrusu/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/vladrusu/Workspace/tools/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/vladrusu/Workspace/tools/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/vladrusu/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/vladrusu/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '/Users/vladrusu/Workspace/tools/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/vladrusu/Workspace/tools/google-cloud-sdk/completion.zsh.inc'; fi
 
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/local/bin/terraform terraform
-export PATH=/Users/vladrusu/Downloads/google-cloud-sdk/bin:${PATH}
+source <(minikube completion zsh)
+source <(kubectl completion zsh)
+source <(helm completion zsh)
+export PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:${PATH}
+export PATH=$PATH:$HOME/zig
+
+#export NVM_DIR=~/.nvm
+#source $(brew --prefix nvm)/nvm.sh
+
+getComputeEngineExternalIP() {
+	INSTANCE_NAME=$1
+	ZONE=$2
+	
+	gcloud compute instances describe ${INSTANCE_NAME} --zone=${ZONE} --format='get(networkInterfaces[0].accessConfigs[0].natIP)'
+}
+
+export DEFAULT_INSTANCE_NAME=workspace
+export DEFAULT_ZONE=europe-west3-c
+
+getDefaultComputeEngineExternalIP() {
+	getComputeEngineExternalIP ${DEFAULT_INSTANCE_NAME} ${DEFAULT_ZONE}
+}
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"

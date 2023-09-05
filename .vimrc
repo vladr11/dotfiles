@@ -410,8 +410,6 @@ nnoremap <leader>g :YcmCompleter GoToDefinition<cr>
 nnoremap <leader>s :YcmCompleter GoToSymbol 
 nnoremap <leader>e :YcmCompleter GoToReferences<cr>
 nnoremap <leader>m :YcmCompleter GoToImplementation<cr>
-nnoremap <leader>t :YcmCompleter GoToType<cr>
-nnoremap <leader>a :YcmCompleter GetDoc<cr>
 
 let g:ycm_add_preview_to_completeopt=0
 
@@ -545,6 +543,7 @@ command! -nargs=1 Tdu call <SID>typedef_union(<q-args>)
 
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_auto_hover = ''
+set completeopt=menuone
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
@@ -572,3 +571,16 @@ let g:gundo_prefer_python3 = 1
 
 " Maximizer
 nnoremap <silent><C-m> :MaximizerToggle<CR>
+
+" Lazygit
+nnoremap <C-g> :!lazygit<CR><CR>
+
+" Easy motion
+let g:EasyMotion_do_mapping = 0
+
+nmap s <Plug>(easymotion-overwin-f)
+
+let g:EasyMotion_smartcase = 1
+
+map <Leader>a <Plug>(easymotion-j)
+map <Leader>t <Plug>(easymotion-k)
