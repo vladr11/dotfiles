@@ -12,7 +12,7 @@ function machine_name()
 }
 
 eval "$(/opt/homebrew/bin/brew shellenv)";
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [ "$WARP_IS_LOCAL_SHELL_SESSION" != 1 ]; then
     exec tmux
 fi
 
@@ -25,9 +25,9 @@ antigen bundle tmux
 antigen bundle tmuxinator
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen bundle Aloxaf/fzf-tab
 antigen bundle poetry
-
-antigen bundle pod
 
 antigen bundle docker
 
@@ -36,11 +36,6 @@ antigen bundle ssh-agent
 antigen bundle pip
 antigen bundle python
 antigen bundle virtualenv
-
-export NVM_COMPLETION=true
-antigen bundle lukechilds/zsh-nvm
-
-antigen bundle kubectl
 
 antigen bundle extract
 antigen bundle history
@@ -67,7 +62,16 @@ precmd() { vcs_info }
 
 zstyle ':vcs_info:git*' formats 'on branch %F{magenta}%b%f'
 
-PROMPT=$'\n''%F{yellow}$(whoami)@$(hostname -s)%f in %F{cyan}%~%f ${vcs_info_msg_0_} %(?..%F{red}%?%f)'$'\n''%(?.%F{green}✔.%F{red}✘)%f  '
+get_prompt_hostname()
+{
+	if [ -n "$IN_NIX_SHELL" ]; then
+		print "nix";
+	else
+		print $(hostname -s)
+	fi
+}
+
+PROMPT=$'\n''%F{yellow}$(whoami)@$(get_prompt_hostname)%f in %F{cyan}%~%f ${vcs_info_msg_0_} %(?..%F{red}%?%f)'$'\n''%(?.%F{green}✔.%F{red}✘)%f  '
 
 compose-remake()
 {
@@ -114,14 +118,20 @@ bd() {
 	fi
 }
 
-alias dcd="docker-compose -f dev.docker-compose.yml"
+alias dcd="docker compose -f dev.docker-compose.yml"
 
-export PATH=${HOME}/.rbenv/shims:${PATH}
-eval "$(rbenv init -)"
+function set_cwd_to_window() {
+	local current_session_name=$(tmux display-message -p '#S')
+	local current_window_index=$(tmux display-message -p '#I')
 
-export PATH=${HOME}/.pyenv/shims:${PATH}
-export PATH=${HOME}/.pyenv/bin:${PATH}
-eval "$(pyenv init -)"
+	tmux send-keys -t $current_session_name:$current_window_index 'export TMUX_CWD=$(PWD)' C-m
+}
+
+alias scwd="set_cwd_to_window"
+
+if [[ -n "$TMUX" && -n "$TMUX_CWD" ]]; then
+	cd "$TMUX_CWD"
+fi
 
 export PATH=${HOME}/go/bin:${PATH}
 
@@ -129,32 +139,49 @@ autoload -U +X bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/vladrusu/Workspace/tools/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/vladrusu/Workspace/tools/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/vladrusu/Workspace/tools/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/vladrusu/Workspace/tools/google-cloud-sdk/completion.zsh.inc'; fi
-
-source <(minikube completion zsh)
-source <(kubectl completion zsh)
-source <(helm completion zsh)
 export PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:${PATH}
-export PATH=$PATH:$HOME/zig
 
-#export NVM_DIR=~/.nvm
-#source $(brew --prefix nvm)/nvm.sh
-
-getComputeEngineExternalIP() {
-	INSTANCE_NAME=$1
-	ZONE=$2
-	
-	gcloud compute instances describe ${INSTANCE_NAME} --zone=${ZONE} --format='get(networkInterfaces[0].accessConfigs[0].natIP)'
-}
-
-export DEFAULT_INSTANCE_NAME=workspace
-export DEFAULT_ZONE=europe-west3-c
-
-getDefaultComputeEngineExternalIP() {
-	getComputeEngineExternalIP ${DEFAULT_INSTANCE_NAME} ${DEFAULT_ZONE}
-}
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+export PATH=${HOME}/Workspace/tools/jwt/:${PATH}
+
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+
+if (( $+commands[fzf] )); then
+	eval "$(fzf --zsh)"
+fi
+
+eval "$(zoxide init zsh)"
+
+# tmuxifier
+export PATH=$PATH:$HOME/.tmux/plugins/tmuxifier/bin
+eval "$(tmuxifier init -)"
+alias t="tmuxifier"
+
+new_code_window() {
+	local name=$1
+	local root=$2
+	ROOT=$root NAME=$name tmuxifier load-window code
+}
+
+new_wom_window() {
+	new_code_window wom $HOME/Workspace/polestar/aftermarket-work-order-management
+}
+
+split_window() {
+	if [[ -n "$1" ]]; then
+		tmux split-window -h -c $1
+	else
+		tmux split-window -h -c $PWD
+	fi
+}
+
+export EDITOR='nvim'
+
+export PATH=${PATH}:${HOME}/.local/bin
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/vladrusu/.lmstudio/bin"
